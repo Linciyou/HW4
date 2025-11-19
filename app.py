@@ -40,9 +40,10 @@ def preprocess_image(img_data):
     # MNIST 是黑底白字，如果畫布是黑底，筆跡數值會 > 0
     rows, cols = np.where(img > 0)
     
-    # 如果沒畫任何東西，直接回傳全黑圖
+    # 如果沒畫任何東西，直接回傳全黑圖 (修正這裡：必須回傳兩個值)
     if len(rows) == 0:
-        return np.zeros((1, 28, 28, 1))
+        empty_img = np.zeros((28, 28), dtype=np.float32)
+        return empty_img.reshape(1, 28, 28, 1), empty_img
 
     # C. 取得 Bounding Box (上下左右邊界)
     y_min, y_max = np.min(rows), np.max(rows)
